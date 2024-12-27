@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/dollar.png" type="image/png" sizes="16x16">
+    <title>Volunteer Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #dcf0fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            max-width: 380px;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+
+        .success-icon {
+            text-align: center;
+            font-size: 48px;
+            height: 72px;
+            background: #359d00;
+            border-radius: 50%;
+            width: 72px;
+            height: 72px;
+            margin: 16px auto;
+            color: #fff;
+            line-height: 72px;
+        }
+
+        .success-title {
+            font-size: 22px;
+            text-align: center;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .success-description {
+            font-size: 15px;
+            line-height: 21px;
+            color: #999;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .timestamp {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="success-icon">&#10004;</div>
+        <div class="success-title">Message Sent Successfully!</div>
+        <div class="success-description">
+          <h3>Thank you !</h3> <br>  Your willingness to make a difference inspires us.
+        </div>
+        <div class="timestamp">
+            Submission Received On: <span id="current-date-time"></span>
+        </div>
+    </div>
+
+    <script>
+        // Dynamically display current date and time in 12-hour format
+        const dateTimeElement = document.getElementById('current-date-time');
+        const currentDate = new Date();
+        
+        // Format the date
+        const formattedDate = currentDate.toLocaleDateString();
+        
+        // Format the time to 12-hour format with AM/PM
+        const formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        
+        // Display the date and time
+        dateTimeElement.innerText = `${formattedDate} at ${formattedTime}`;
+    </script>
+</body>
+
+</html>

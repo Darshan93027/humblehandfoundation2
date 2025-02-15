@@ -12,6 +12,14 @@ from django.conf import settings
 import datetime
 from .models import volunteer 
 
+import os
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from google.oauth2 import id_token
+from google.auth.transport import requests
+#from .models import User
+
 def index(req):
     return render(req,"Core_Application/index.html")
 
@@ -122,21 +130,7 @@ import datetime
 import os
 
 def generate_pdf(file_path, name, date, time):
-    """
-    Generates a PDF with a thank-you message.
-    """
-    c = canvas.Canvas(file_path)
-    c.setFont("Helvetica", 12)
-    c.drawString(100, 750, "Thank You for Visiting HumbleHandFoundation!")
-    c.drawString(100, 730, f"Dear {name},")
-    c.drawString(100, 710, "We are truly grateful for your support and interest in our mission.")
-    c.drawString(100, 690, "Your kindness inspires us to continue making a difference.")
-    c.drawString(100, 670, f"Date: {date}")
-    c.drawString(100, 650, f"Time: {time}")
-    c.drawString(100, 630, "Warm regards,")
-    c.drawString(100, 610, "HumbleHandFoundation Team")
-    c.save()
-
+   pass
 def Message_Sent_Successfully(req):
     if req.method == "POST":
         # Retrieve data from the form
@@ -205,3 +199,37 @@ def Message_Sent_Successfully(req):
 
 
 
+def signup_view(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Check if username already exists
+        if Signup.objects.filter(username=username).exists():
+            return render(request, 'Core_Application/signup.html', {'error': 'Username already taken!'})
+
+        # Save new user
+        user = Signup(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+        user.save()
+        return redirect('login')  # Redirect to login page after signup
+
+    return render(request, 'CoreApplicationsignup.html')
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Check if user exists in Signup table
+        try:
+            user = Signup.objects.get(username=username, password=password)
+            return render(request, 'Core_Application/dashboard.html', {'user': user})  # Redirect to dashboard
+        except Signup.DoesNotExist:
+            return render(request, 'login.html', {'error': 'Invalid username or password!'})
+
+    return render(request, 'login.html')

@@ -11,6 +11,22 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+
+
+load_dotenv()
+
+
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+if not GOOGLE_OAUTH_CLIENT_ID:
+    raise ValueError('GOOGLE_OAUTH_CLIENT_ID is missing. Have you put it in a file at core/.env ?')
+print(f'{GOOGLE_OAUTH_CLIENT_ID = }')
+
+
+SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,12 +54,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Core_Application',
-    'django.contrib.sites',
-    'allauth'
-    'allauth.accounts',
-    'allauth.socialaccounts',
-    'allauth.socialaccount.providers.google',
 ]
+    
+    
+   
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddeware',
+    
 ]
 
 ROOT_URLCONF = 'HumbleHandFoundation.urls'
@@ -138,15 +152,11 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "contactdarshan07@gmail.com"  # Replace with your Gmail address
-EMAIL_HOST_PASSWORD = "" 
+EMAIL_HOST_USER = "ddemo4544@gmail.com"  # Replace with your Gmail address
+EMAIL_HOST_PASSWORD = "ajun datg flwf wbwx" 
 
 
-AUTHENTICATION_BACKENDS = [
-"Django.contrib.auth.backends.ModeBackend",
-"allauth.account.auth_backends.AuthenticationBackend",
 
-]
 
  
 

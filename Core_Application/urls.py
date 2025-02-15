@@ -15,6 +15,9 @@ urlpatterns = [
     path("Events/",views.Events,name="event"),
     path("Events/",views.galleries,name="gallery"),
     path("Message_Sent_Successfully/",views.Message_Sent_Successfully,name="Message_Sent_Successfully"),
+   #  path('sign-out/', views.sign_out, name='sign_out'),
+   # path('auth-receiver/', views.auth_receiver, name='auth_receiver'),
+    # path('sign_in', views.sign_in, name='sign_in'),
 
 ]
 

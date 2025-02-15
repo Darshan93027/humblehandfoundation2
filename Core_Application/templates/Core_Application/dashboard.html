@@ -106,12 +106,55 @@
             color: #666;
             font-size: 1.1em;
         }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            color: #2575fc;
+            padding: 10px 20px;
+            border: 2px solid #2575fc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logout-button:hover {
+            background: #2575fc;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37,117,252,0.3);
+        }
+        
+        .logout-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .dashboard-header {
+            position: relative;
+            padding-top: 20px;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
   <!--  {% include 'Core_Application/navbar.html' %} --> 
 
     <div class="dashboard-container">
+        <div class="dashboard-header">
+            <a href="{% url 'logout' %}" class="logout-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                Logout
+            </a>
+        </div>
+
         <div class="welcome-card">
             <div class="welcome-message">Welcome back!</div>
             <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>

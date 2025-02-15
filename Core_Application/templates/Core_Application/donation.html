@@ -164,20 +164,22 @@
 <body>
     <header>
         <nav>
-         
             <input type="checkbox" id="check">
             <label for="check" id="check-btn"><i class="fas fa-bars"></i></label>
             <ul>
-                <!-- Other nav items -->
-                <li class="nav-item"><a href="{% url 'Contact' %}" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="{% url 'donate' %}" class="nav-link">Donate</a></li>
+                <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="{% url 'join' %}" class="nav-link">Join</a></li>
+                <li class="nav-item"><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="{% url 'events' %}" class="nav-link">Events</a></li>
+                <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                
             </ul>
         </nav>
         <div class="head">
-            <h1>
-                Together, we can make a difference. 
-            </h1>
-            
-            <button>Donate now</button>
+            <h1>Together, we can make a difference.</h1>
+            <a href="{% url 'signup' %}"><button>Donate now</button></a>
         </div>
     </header>
 </body>

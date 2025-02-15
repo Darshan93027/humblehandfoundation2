@@ -1,24 +1,24 @@
 from django.contrib import admin
-from django.urls import path , include 
+from django.urls import path, include
 from Core_Application import views
 from django.conf import settings
-from django.conf.urls.static import static 
-urlpatterns = [
-   
-    path("",views.index,name="index"),
-    path("contribators/",views.contribators,name="contribators"),
-    path("About/",views.About,name="About"),
-    path("Join/",views.Join,name="Join"),
-    path("Contact",views.Contact,name="Contact"),
-    path("Donate/",views.Donate,name="Donate"),
-    path("Volunteer/",views.Be_a_Volunteer,name="Volunteer"),
-    path("Events/",views.Events,name="event"),
-    path("Events/",views.galleries,name="gallery"),
-    path("Message_Sent_Successfully/",views.Message_Sent_Successfully,name="Message_Sent_Successfully"),
-   #  path('sign-out/', views.sign_out, name='sign_out'),
-   # path('auth-receiver/', views.auth_receiver, name='auth_receiver'),
-    # path('sign_in', views.sign_in, name='sign_in'),
+from django.conf.urls.static import static
 
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('contributors/', views.contribators, name='contributors'),
+    path('about/', views.about, name='about'),
+    path('join/', views.join, name='join'),
+    path('contact/', views.contact, name='contact'),
+    path('donate/', views.donate, name='donate'),
+    path('volunteer/', views.be_a_volunteer, name='volunteer'),
+    path('events/', views.events, name='events'),
+    path('gallery/', views.galleries, name='gallery'),
+    path('message_sent/', views.message_sent_successfully, name='message_sent'),
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='login'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('process-donation/', views.process_donation, name='process_donation'),
 ]
 
 if settings.DEBUG:

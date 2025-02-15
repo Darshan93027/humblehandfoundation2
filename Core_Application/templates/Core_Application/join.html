@@ -24,7 +24,7 @@
     
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
         {% load static %}
         <img src="{% static 'images/humblehand.png' %}" alt="Humble Hand Logo" class="img-fluid" style="height: 90px; margin-right: 10px;">
       </a>
@@ -35,12 +35,13 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="{% url 'Donate' %}" class="nav-link">Donate</a></li>
-          <li class="nav-item"><a href="{% url 'About' %}" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="{% url 'Join' %}" class="nav-link">Join</a></li>
-          <li class="nav-item"><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
-          <li class="nav-item"><a href="{% url 'event' %}" class="nav-link">Events</a></li>
-          <li class="nav-item"><a href="{% url 'Contact' %}" class="nav-link">Contact</a></li>
+<li class="nav-item"><a href="{% url 'donate' %}" class="nav-link">Donate</a></li>
+<li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+<li class="nav-item"><a href="{% url 'join' %}" class="nav-link">Join</a></li>
+<li class="nav-item"><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+<li class="nav-item"><a href="{% url 'events' %}" class="nav-link">Events</a></li>
+<li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+
         </ul>
       </div>
     </div>
@@ -51,8 +52,11 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-             <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="index.html"></a></span> <span></span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Join Us </h1>
+             <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+               <span class="mr-2"><a href="{% url 'index' %}">Home</a></span> 
+               <span>Join Us</span>
+             </p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Join Us</h1>
           </div>
         </div>
       </div>

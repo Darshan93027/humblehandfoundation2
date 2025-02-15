@@ -30,6 +30,7 @@ from google.auth.transport import requests
 from .models import Signup
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.decorators import login_required
+from .tasks import save_volunteer_data, send_thank_you_email
 
 def index(request):
     return render(request, "Core_Application/index.html")
@@ -72,57 +73,30 @@ def message_sent_successfully(request):
         date = current_time.strftime("%d/%m/%Y")
         formatted_time = current_time.strftime("%I:%M %p")
 
-        # Save to database
-        volunteer_data = volunteer(
-            name=name,
-            email=email,
-            msg=msg,
-            time=formatted_time,
-            date=date
-        )
-        volunteer_data.save()
-
-        # Email content
-        subject = "Thank You for Visiting! HumbleHandFoundation"
-        message = (
-            f"Dear {name},\n\n"
-            "We hope this email finds you well. Thank you for taking the time to visit HumbleHandFoundation. "
-            "Your interest in our mission truly inspires us to keep moving forward.\n\n"
-            "At HumbleHandFoundation, we are dedicated to making a significant difference in the lives of underprivileged children. "
-            "Your support can help provide education, healthcare, and opportunities to those who need them most. "
-            "Together, we can give them a brighter future.\n\n"
-            "If you would like to contribute, please consider donating today. Even the smallest amount can have a lasting impact. "
-            "Visit the link below to learn more and make a donation:\n"
-            "**Donate Now**: https://www.example.com/donate\n\n"
-            "Thank you once again for your kindness and support. Together, we can change lives and bring smiles to countless children.\n\n"
-            "Warm regards,\n"
-            "HumbleHandFoundation\n\n"
-            f"Date: {date}\nTime: {formatted_time}"
-        )
-
-        # Email sending
+        # Queue tasks and redirect immediately
         try:
-            email_message = EmailMessage(
-                subject,
-                message,
-                settings.EMAIL_HOST_USER,
-                [email]
+            # Queue Celery tasks asynchronously
+            save_volunteer_data.apply_async(
+                args=[name, email, msg, formatted_time, date],
+                countdown=1  # 1 second delay to ensure smooth redirect
             )
-
-            pdf_file_path = f"thank_you_{name}.pdf"
-            if not os.path.exists(pdf_file_path):
-                generate_pdf(pdf_file_path, name, date, formatted_time)
-
-            with open(pdf_file_path, 'rb') as pdf_file:
-                email_message.attach("Thank_You.pdf", pdf_file.read(), 'application/pdf')
-
-            email_message.send(fail_silently=False)
-            email_response = "Email with PDF sent successfully"
+            send_thank_you_email.apply_async(
+                args=[name, email, date, formatted_time],
+                countdown=2  # 2 second delay to ensure data is saved first
+            )
         except Exception as e:
-            email_response = f"Failed to send email: {str(e)}"
+            # Log the error but don't wait  
+            print(f"Task queuing error: {str(e)}")
 
+        # Redirect immediately with a flash message
         return render(request, "Core_Application/message_sent_successfully.html", {
-            "email_response": email_response
+            "email_response": "Thank you! Your message is being processed.",
+            "debug_info": {
+                "name": name,
+                "email": email,
+                "date": date,
+                "time": formatted_time
+            }
         })
 
     return render(request, "Core_Application/join.html")
@@ -174,12 +148,8 @@ def login_view(request):
 
 @login_required
 def dashboard(request):
-    context = {
-        'total_donated': '10,000',  # Replace with actual data from your database
-        'donations_count': '5',     # Replace with actual data
-        'impact_made': '25'         # Replace with actual data
-    }
-    return render(request, 'Core_Application/dashboard.html', context)
+    
+    return render(request, 'Core_Application/dashboard.html', )
 
 def process_donation(request):
     if request.method == 'POST':

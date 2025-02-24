@@ -1,7 +1,10 @@
 from django.contrib import admin
-from Core_Application.models import volunteer,Signup# Import the Volunteer model correctly
+from .models import Contact, Volunteer, Signup, AdminPassword
+
+admin.site.register(Contact)
+admin.site.register(Volunteer)
+admin.site.register(Signup)
+admin.site.register(AdminPassword)
 
 
-#admin.site.register(User)
-admin.site.register(volunteer)  # Register the Volunteer model with the admin site
-admin.site.register(Signup) # Register the
+

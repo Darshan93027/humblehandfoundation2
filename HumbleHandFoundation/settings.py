@@ -12,17 +12,17 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
+##from dotenv import load_dotenv
 from pathlib import Path
 
+    
+# load_dotenv()
 
-load_dotenv()
 
-
-GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
-if not GOOGLE_OAUTH_CLIENT_ID:
-    raise ValueError('GOOGLE_OAUTH_CLIENT_ID is missing. Have you put it in a file at core/.env ?')
-print(f'{GOOGLE_OAUTH_CLIENT_ID = }')
+# GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+# if not GOOGLE_OAUTH_CLIENT_ID:
+#     raise ValueError('GOOGLE_OAUTH_CLIENT_ID is missing. Have you put it in a file at core/.env ?')
+# print(f'{GOOGLE_OAUTH_CLIENT_ID = }')
 
 
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
@@ -36,12 +36,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q4#+p^ir-=i7u!qx3un=1$vvzvee0kj$lar4*$l2h@(j4r-cxr'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -61,6 +61,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -136,11 +138,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Ensure this points to the right 'static' directory
-]
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICSTORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -149,17 +150,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Email Settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ddemo4544@gmail.com'
-EMAIL_HOST_PASSWORD = 'ajun datg flwf wbwx'  # Your app password
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # For debugging email issues
 EMAIL_DEBUG = True
 
 
+ # Set to your timezone 
 
 
- 

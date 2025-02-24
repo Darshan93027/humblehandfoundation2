@@ -2,177 +2,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Humble Hand</title>
+    <title>Login - HumbleHandFoundation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Overpass', sans-serif;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+
         .login-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .left-side {
+            flex: 1;
+            background: url({% static 'images/bg_2.jpg' %}) center/cover;
+            position: relative;
+        }
+
+        .left-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .right-side {
+            flex: 1;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-top: 80px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
-        .login-title {
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #f86f2d;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            color: #e55d1a;
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .logo {
             text-align: center;
-            color: #333;
             margin-bottom: 30px;
-            font-size: 2em;
         }
-        .form-group {
+
+        .logo img {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .logo h2 {
+            color: #333;
+            font-size: 24px;
             margin-bottom: 20px;
         }
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
+
+        .input-group {
+            margin-bottom: 20px;
         }
-        .form-control:focus {
-            border-color: #2575fc;
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .input-group input:focus {
             outline: none;
+            border-color: #f86f2d;
         }
-        .login-button {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
+
+        .submit-btn {
             width: 100%;
-            font-size: 1.1em;
+            padding: 12px;
+            background: #f86f2d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            margin-top: 10px;
         }
-        .login-button:hover {
-            transform: translateY(-2px);
+
+        .submit-btn:hover {
+            background: #e55d1a;
         }
+
         .signup-link {
             text-align: center;
             margin-top: 20px;
         }
-        .signup-button {
-            background: transparent;
-            color: #2575fc;
-            padding: 10px 20px;
-            border: 2px solid #2575fc;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+
+        .signup-link a {
+            color: #f86f2d;
             text-decoration: none;
-            display: inline-block;
         }
-        .signup-button:hover {
-            background: #2575fc;
-            color: white;
-        }
-        .error-message {
+
+        .error-msg {
+            background: #ffe6e6;
             color: #dc3545;
-            text-align: center;
-            margin-top: 10px;
             padding: 10px;
-            background-color: #ffe6e6;
             border-radius: 5px;
-            display: none;
-        }
-        .error-message.show {
-            display: block;
-        }
-        .forgot-password {
+            margin-bottom: 20px;
             text-align: center;
-            margin-top: 15px;
         }
-        .forgot-password a {
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-        .forgot-password a:hover {
-            color: #2575fc;
-        }
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: transparent;
-            color: #2575fc;
-            padding: 8px 15px;
-            border: 2px solid #2575fc;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .back-button:hover {
-            background: #2575fc;
-            color: white;
-            transform: translateX(-3px);
-        }
-        .back-button svg {
-            width: 16px;
-            height: 16px;
-        }
-        body {
-            position: relative;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .left-side {
+                display: none;
+            }
+
+            .right-side {
+                padding: 1rem;
+            }
+
+            .form-box {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <a href="{% url 'donate' %}" class="back-button">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-        </svg>
-        Back to Donate
-    </a>
-    
     <div class="login-container">
-        <h2 class="login-title">Welcome Back</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" name="username" class="form-control" placeholder="Username" required>
+        <div class="left-side"></div>
+        <div class="right-side">
+            <a href="{% url 'index' %}" class="back-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+            </a>
+
+            <div class="form-box">
+                <div class="logo">
+                    <img src="{% static 'images/humblehand.png' %}" alt="Logo">
+                    <h2>Welcome Back</h2>
+                </div>
+
+                {% if error %}
+                <div class="error-msg">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input type="text" name="username" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" name="password" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="{% url 'signup' %}">Create Account</a>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
-            </div>
-            <button type="submit" class="login-button">Login</button>
-            {% if error %}
-            <p class="error-message show">{{ error }}</p>
-            {% endif %}
-        </form>
-        <div class="forgot-password">
-      
-        </div>
-        <div class="signup-link">
-            <p>Don't have an account?</p>
-            <a href="{% url 'signup' %}" class="signup-button">Create Account</a>
         </div>
     </div>
-
-    <script>
-        // Show error message with animation if it exists
-        const errorMessage = document.querySelector('.error-message');
-        if (errorMessage && errorMessage.textContent.trim() !== '') {
-            errorMessage.classList.add('show');
-        }
-
-        // Clear error message when user starts typing
-        const inputs = document.querySelectorAll('.form-control');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                errorMessage.classList.remove('show');
-            });
-        });
-    </script>
 </body>
 </html>

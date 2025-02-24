@@ -43,7 +43,7 @@
             <li class="nav-item"><a href="{% url 'donate' %}" class="nav-link">Donate</a></li>
             <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
             <li class="nav-item"><a href="{% url 'join' %}" class="nav-link">Join</a></li>
-            <li class="nav-item"><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
+            
             <li class="nav-item"><a href="{% url 'events' %}" class="nav-link">Events</a></li>
             <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
           </ul>
@@ -67,51 +67,102 @@
       </div>
     </div>
 
-
-    {% include 'Core_Application/photo.html' %}
-
-
-    {% load static %}
-    <section class="ftco-section">
+    <!-- Mission & Vision Section -->
+    <section class="ftco-section bg-light">
         <div class="container">
-            <div class="row d-flex">
-                <!-- Image Section -->
-                <div class="col-md-6 d-flex ftco-animate">
-                    <div 
-                        class="img img-about align-self-stretch" 
-                        style="background-image: url('{% static "images/bg_3.jpg" %}'); width: 100%;">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-10 text-center">
+                    <h2 class="mb-4">Our Mission & Vision</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="mission-card">
+                                <div class="icon">🎯</div>
+                                <h3>Our Mission</h3>
+                                <p>To empower underprivileged communities through sustainable initiatives in education, healthcare, and skill development, creating lasting positive change in society.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="mission-card">
+                                <div class="icon">👁️</div>
+                                <h3>Our Vision</h3>
+                                <p>To build a world where every individual has access to basic necessities, quality education, and opportunities for growth, regardless of their socio-economic background.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <!-- Text Content Section -->
-                <div class="col-md-6 pl-md-5 ftco-animate">
-                    <h2 class="mb-4">Welcome to Humble Hand Foundation</h2>
-                    <p>
-                        At Humble Hand Foundation, we believe in the transformative power of kindness and community. 
-                        Our mission is to offer a helping hand to those in need, empowering individuals and families to live with dignity and hope. 
-                        From providing essential meals and distributing clothing to offering support for the underprivileged, 
-                        we are committed to making a lasting positive impact in the lives of others.
-                    </p>
-                    <p>
-                        Founded with the conviction that small acts of kindness can create significant change, Humble Hand Foundation 
-                        serves as a bridge between those who want to give and those who need help the most. 
-                        Rooted in the values of humanity, humility, and hope, our efforts aim to meet basic needs and promote well-being 
-                        in communities across India, starting from our home base in Vadodara, Gujarat.
-                    </p>
-                    <p>
-                        With the support of generous donors, volunteers, and partners, we are expanding our reach to various cities across the country, 
-                        working towards a brighter, more inclusive future where everyone has the opportunity to thrive.
-                    </p>
-                    <p>
-                        Join us in making a difference—because every hand extended in kindness creates ripples of change 
-                        that can transform the world, one act at a time.
-                    </p>
                 </div>
             </div>
         </div>
     </section>
-    
 
+    <!-- Our Story Section -->
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-md-6 d-flex ftco-animate">
+                    <div class="img img-about align-self-stretch" style="background-image: url('{% static "images/bg_3.jpg" %}'); width: 100%;"></div>
+                </div>
+                <div class="col-md-6 pl-md-5 ftco-animate">
+                    <h2 class="mb-4">Our Journey</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="year">2020</div>
+                            <h3>Foundation Established</h3>
+                            <p>Started with a small team of passionate volunteers in Vadodara, focusing on local community support.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">2021</div>
+                            <h3>Education Initiative Launch</h3>
+                            <p>Launched our first educational support program, reaching out to 100+ underprivileged children.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">2022</div>
+                            <h3>Healthcare Programs</h3>
+                            <p>Expanded our services to include healthcare camps and medical assistance programs.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="year">2023</div>
+                            <h3>Growing Impact</h3>
+                            <p>Reached multiple cities across Gujarat, impacting thousands of lives through various initiatives.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Our Values Section -->
+    <section class="ftco-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h2 class="mb-4">Our Core Values</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="value-card">
+                        <div class="icon">🤝</div>
+                        <h3>Compassion</h3>
+                        <p>We believe in serving with empathy and understanding, treating every individual with dignity and respect.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="value-card">
+                        <div class="icon">⚖️</div>
+                        <h3>Integrity</h3>
+                        <p>Maintaining transparency and accountability in all our operations and relationships with stakeholders.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="value-card">
+                        <div class="icon">🌱</div>
+                        <h3>Sustainability</h3>
+                        <p>Creating long-term impact through sustainable solutions that empower communities to become self-reliant.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Loader -->
     <div id="ftco-loader" class="show fullscreen">
@@ -142,6 +193,103 @@
       </div>
     </section>
 
+    <!-- Add these styles -->
+    <style>
+    .mission-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .mission-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .mission-card .icon {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    .mission-card h3 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 50px;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 30px;
+        border-left: 2px solid #f86f2d;
+        padding-left: 30px;
+    }
+
+    .timeline-item:last-child {
+        border-left: none;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -11px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        background: #f86f2d;
+        border-radius: 50%;
+    }
+
+    .year {
+        color: #f86f2d;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .value-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .value-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .value-card .icon {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    .value-card h3 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .timeline {
+            padding-left: 20px;
+        }
+        
+        .timeline-item {
+            padding-left: 20px;
+        }
+        
+        .mission-card, .value-card {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    }
+    </style>
 
     <!-- Scripts -->
     <script src="{% static 'js/jquery.min.js' %}"></script>

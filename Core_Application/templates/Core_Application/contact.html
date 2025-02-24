@@ -24,9 +24,24 @@
   </head>
   <body>
     
+    <div class="password-modal" id="passwordModal">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal()">×</div>
+            <h2>Admin Access</h2>
+            <form action="{% url 'verify_password' %}" method="POST" class="password-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Enter Admin Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Access Dashboard</button>
+                <a href="{% url 'forgot_password' %}" class="forgot-password">Forgot Password?</a>
+            </form>
+        </div>
+    </div>
+
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
       <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <a class="navbar-brand d-flex align-items-center" href="#" onclick="showModal(event)">
           {% load static %}
           <img src="{% static 'images/humblehand.png' %}" alt="Humble Hand Logo" class="img-fluid" style="height: 90px; margin-right: 10px;">
       </a>
@@ -40,8 +55,7 @@
           <li class="nav-item"><a href="{% url 'donate' %}" class="nav-link">Donate</a></li>
           <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
           <li class="nav-item"><a href="{% url 'join' %}" class="nav-link">Join</a></li>
-          <li class="nav-item"><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
-          <li class="nav-item"><a href="{% url 'events' %}" class="nav-link">Events</a></li>
+            <li class="nav-item"><a href="{% url 'events' %}" class="nav-link">Events</a></li>
           <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
         </ul>
       </div>
@@ -65,32 +79,100 @@
 {% include "Core_Application\photo.html"%}
 
    {% load static %}
-    <section class="ftco-section-3 img" style="background-image: url({% static "images/bg_3.jpg"%});">
-    	<div class="overlay"></div>
-    	<div class="container">
-    		<div class="row d-md-flex">
-    		<div class="col-md-6 d-flex ftco-animate">
-    			<div class="img img-2 align-self-stretch" style="background-image: url(images/bg_4.jpg);"></div>
-    		</div>
-    		<div class="col-md-6 volunteer pl-md-5 ftco-animate">
-    			<h3 class="mb-3">Be a volunteer</h3>
-    			<form action="#" class="volunter-form">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Name">
+    <section class="ftco-section contact-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h2 class="mb-4">Get In Touch</h2>
+                    <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                </div>
             </div>
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Email">
+
+            <div class="row">
+                <div class="col-md-6 mb-5">
+                    <div class="contact-info ftco-animate">
+                        <div class="info-box mb-4">
+                            <h3>Contact Information</h3>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <div>
+                                    <h4>Address</h4>
+                                    <p>123 Main Street, Mumbai, Maharashtra, India</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📞</span>
+                                <div>
+                                    <h4>Phone</h4>
+                                    <p>+91 98765 43210</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">✉️</span>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>info@humblehand.org</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="contact-form-box ftco-animate">
+                        <form action="{% url 'contact' %}" method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Your Name</label>
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" name="email" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" name="subject" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea name="message" class="form-control" rows="5" required></textarea>
+                            </div>
+
+                            {% if messages %}
+                            <div class="message-box">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-submit">
+                                Send Message
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-              <textarea name="" id="" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
-            </div>
-            <div class="form-group">
-              <input type="submit" value="Send Message" class="btn btn-white py-3 px-5">
-            </div>
-          </form>
-    		</div>    			
-    		</div>
-    	</div>
+        </div>
     </section>
 
     {% include "Core_Application\map.html" %}
@@ -122,6 +204,330 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="{% static 'js/google-map.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    <script>
+    function showModal(event) {
+        event.preventDefault();
+        const modal = document.getElementById('passwordModal');
+        const modalContent = modal.querySelector('.modal-content');
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modalContent.classList.add('active');
+        }, 10);
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('passwordModal');
+        const modalContent = modal.querySelector('.modal-content');
+        modalContent.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('passwordModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // Handle form submission
+    document.querySelector('.password-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        try {
+            const response = await fetch('{% url "verify_password" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                window.location.href = '{% url "data" %}';
+            } else {
+                const modalContent = document.querySelector('.modal-content');
+                modalContent.classList.add('shake');
+                setTimeout(() => modalContent.classList.remove('shake'), 400);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+    </script>
   </body>
 </html>
+
+<style>
+    .contact-section {
+        background: #f8f9fa;
+        padding: 80px 0;
+    }
+
+    .contact-info {
+        height: 100%;
+        padding: 30px;
+    }
+
+    .info-box {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .info-box h3 {
+        color: #333;
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .info-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .info-item .icon {
+        font-size: 24px;
+        margin-right: 15px;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .info-item h4 {
+        color: #f86f2d;
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .info-item p {
+        margin: 5px 0 0;
+        color: #666;
+    }
+
+    .social-links {
+        margin-top: 30px;
+    }
+
+    .social-links h3 {
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f86f2d;
+        font-size: 20px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .social-icon:hover {
+        background: #f86f2d;
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    .contact-form-box {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .form-control {
+        border: 2px solid #eee;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #f86f2d;
+        box-shadow: 0 0 0 3px rgba(248,111,45,0.1);
+    }
+
+    label {
+        font-weight: 500;
+        color: #444;
+        margin-bottom: 8px;
+    }
+
+    .btn-submit {
+        background: linear-gradient(45deg, #f86f2d, #ff8f50);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 8px;
+        border: none;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(248,111,45,0.3);
+    }
+
+    .message-box {
+        margin-bottom: 20px;
+    }
+
+    .alert {
+        border-radius: 8px;
+        padding: 12px 15px;
+    }
+
+    @media (max-width: 768px) {
+        .contact-form-box {
+            padding: 20px;
+        }
+
+        .info-box {
+            margin-bottom: 30px;
+        }
+    }
+
+    .password-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        transform: scale(0.7);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .modal-content.active {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+        color: #f86f2d;
+        transform: rotate(90deg);
+    }
+
+    .password-form {
+        margin-top: 20px;
+    }
+
+    .password-form input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .password-form input:focus {
+        border-color: #f86f2d;
+        box-shadow: 0 0 0 3px rgba(248, 111, 45, 0.1);
+        outline: none;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(45deg, #f86f2d, #ff8f50);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(248, 111, 45, 0.2);
+    }
+
+    .forgot-password {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #f86f2d;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .forgot-password:hover {
+        color: #ff8f50;
+        text-decoration: underline;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    .shake {
+        animation: shake 0.4s ease-in-out;
+    }
+</style>
 

@@ -19,29 +19,34 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
   </head>
   <body>
     
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
         {% load static %}
-        <img src="{% static 'images/humblehand.png' %}" alt="Humble Hand Logo" class="img-fluid" style="height: 90px; margin-right: 10px;">
-    </a>
+        <img src="{% static 'images/humblehand.png' %}" alt="Humble Hand Logo" class="img-fluid" style="height: 50px; margin-right: 10px;">
+        <span class="brand-text d-none d-lg-none">𝓗𝓾𝓶𝓫𝓵𝓮 𝓗𝓪𝓷𝓭 𝓕𝓸𝓾𝓷𝓭𝓪𝓽𝓲𝓸𝓷</span>
+      </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </button>
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="{% url 'donate' %}" class="nav-link">Donate</a></li>
-            <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-            <li class="nav-item"><a href="{% url 'join' %}" class="nav-link">Join</a></li>
-            <li class="nav-item"><a href="{% url 'gallery' %}" class="nav-link">Gallery</a></li>
-            <li class="nav-item"><a href="{% url 'events' %}" class="nav-link">Events</a></li>
-            <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
-            
+            <li class="nav-item"><a href="{% url 'index' %}" class="nav-link mobile-nav-link">Home</a></li>
+            <li class="nav-item"><a href="{% url 'donate' %}" class="nav-link mobile-nav-link">Donate</a></li>
+            <li class="nav-item"><a href="{% url 'about' %}" class="nav-link mobile-nav-link">About</a></li>
+            <li class="nav-item"><a href="{% url 'join' %}" class="nav-link mobile-nav-link">Join</a></li>
+          
+            <li class="nav-item"><a href="{% url 'events' %}" class="nav-link mobile-nav-link">Events</a></li>
+            <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link mobile-nav-link">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -66,7 +71,7 @@
     <section class="ftco-counter ftco-intro" id="section-counter">
     	<div class="container">
     		<div class="row no-gutters">
-    			<div class="col-md-5 d-flex justify-content-center counter-wrap ftco-animate">
+    			<div class="col-12 col-md-4 d-flex justify-content-center counter-wrap ftco-animate mb-3 mb-md-0">
             <div class="block-18 color-1 align-items-stretch">
               <div class="text">
               	<span>Served Over</span>
@@ -75,7 +80,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+          <div class="col-12 col-md-4 d-flex justify-content-center counter-wrap ftco-animate mb-3 mb-md-0">
             <div class="block-18 color-2 align-items-stretch">
                 <div class="text">
                     <h3 class="mb-4">Donate Today</h3>
@@ -85,7 +90,7 @@
                 
             </div>
           </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+          <div class="col-12 col-md-4 d-flex justify-content-center counter-wrap ftco-animate">
             <div class="block-18 color-3 align-items-stretch">
               <div class="text">
               	<h3 class="mb-4">Be a Volunteer</h3>
@@ -252,7 +257,7 @@
       </div>
       <div class="row">
         <!-- Event 1 -->
-        <div class="col-md-3 col-sm-3 d-flex ftco-animate">
+        <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
             {% load static %}
             <a href="blog-single.html" class="block-20" style="background-image: url(% static "images/diwali-gift.jpg" }');"></a>
@@ -269,7 +274,7 @@
         </div>
   
         <!-- Event 2 -->
-        <div class="col-md-3 col-sm-3 d-flex ftco-animate">
+        <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
             {% load static %}
             <a href="blog-single.html" class="block-20" style="background-image: url(% static "images/jalabi-fafda.jpg" }');"></a>
@@ -286,7 +291,7 @@
         </div>
   
         <!-- Event 3 -->
-        <div class="col-md-3 col-sm-3 d-flex ftco-animate">
+        <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
             <a href="blog-single.html" class="block-20" style="background-image: url(%  static "images/khichdi.jpg" }');"></a>
             <div class="text p-4 d-block">
@@ -302,7 +307,7 @@
         </div>
   
         <!-- Event 4 -->
-        <div class="col-md-3 col-sm-3 d-flex ftco-animate">
+        <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
             <a href="blog-single.html" class="block-20" style="background-image: url(% static "images/poha.jpg" }}');"></a>
             <div class="text p-4 d-block">
@@ -356,3 +361,214 @@
 </html>
 
 {% include 'Core_Application/footer.html' %}
+
+<style>
+    @media (max-width: 768px) {
+        .hero-wrap h1 {
+            font-size: 2rem;
+        }
+        
+        .block-18 {
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .gallery {
+            height: 200px;
+        }
+        
+        .cause-entry .img {
+            height: 200px;
+        }
+        
+        .blog-entry .block-20 {
+            height: 200px;
+        }
+        
+        .text p.time-loc {
+            font-size: 0.9rem;
+        }
+        
+        .heading {
+            font-size: 1.2rem;
+        }
+    }
+    
+    /* Ensure images maintain aspect ratio */
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Improve text readability on mobile */
+    .text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    /* Make cards same height in rows */
+    .cause-entry, .blog-entry {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Ensure proper spacing in mobile menu */
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+    
+    .nav-item {
+        padding: 0.5rem 0;
+    }
+
+    /* Updated Mobile navbar styles */
+    @media (max-width: 991px) {
+        .ftco_navbar {
+            background: #fff !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            display: flex !important;
+            align-items: center;
+            max-width: 80%;
+        }
+
+        .brand-text {
+            display: block !important;
+            font-size: 22px;
+            line-height: 1.2;
+            margin-left: 10px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand img {
+            height: 35px !important;
+            width: auto;
+            margin-right: 0;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 10px;
+            outline: none !important;
+            background: transparent;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler .hamburger {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .navbar-collapse {
+            background: #fff;
+            padding: 15px 0;
+            margin-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .mobile-nav-link {
+            color: #000 !important;
+            font-size: 16px;
+            padding: 12px 20px !important;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .mobile-nav-link:hover {
+            background: #f8f9fa;
+        }
+
+        #ftco-nav {
+            margin-top: 10px;
+        }
+    }
+
+    /* Adjust brand text for very small screens */
+    @media (max-width: 360px) {
+        .brand-text {
+            font-size: 20px;
+        }
+
+        .navbar-brand img {
+            height: 30px !important;
+        }
+    }
+
+    /* Make navbar white when scrolled on mobile */
+    .ftco-navbar-light.scrolled {
+        background: #fff !important;
+    }
+
+    .ftco-navbar-light.scrolled .navbar-toggler .hamburger {
+        color: #000 !important;
+    }
+
+    /* Hamburger Menu Styles */
+    .hamburger {
+        width: 30px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: #000;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+    }
+
+    .hamburger span:nth-child(1) {
+        top: 0px;
+    }
+
+    .hamburger span:nth-child(2) {
+        top: 9px;
+    }
+
+    .hamburger span:nth-child(3) {
+        top: 18px;
+    }
+
+    /* Animation for hamburger to X */
+    .navbar-toggler[aria-expanded="true"] .hamburger span:nth-child(1) {
+        top: 9px;
+        transform: rotate(135deg);
+    }
+
+    .navbar-toggler[aria-expanded="true"] .hamburger span:nth-child(2) {
+        opacity: 0;
+        left: -60px;
+    }
+
+    .navbar-toggler[aria-expanded="true"] .hamburger span:nth-child(3) {
+        top: 9px;
+        transform: rotate(-135deg);
+    }
+
+    /* Updated brand text styles */
+    .brand-text {
+        font-family: 'UnifrakturMaguntia', 'Old English Text MT', 'Blackletter', serif;
+        color: #000;
+        font-weight: normal;
+        text-transform: none;
+    }
+
+    /* Add custom font */
+    @font-face {
+        font-family: 'UnifrakturMaguntia';
+        src: url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+    }
+</style>

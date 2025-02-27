@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from Core_Application.models import Volunteer
-import datetime
+from datetime import datetime
 import time
 import pandas as pd
+import threading
+from django.contrib.auth import logout
 
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
-import datetime
 from .models import Volunteer, Contact
 
 from django.core.mail import EmailMessage
@@ -17,7 +18,6 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
-import datetime
 import os
 
 import os
@@ -38,11 +38,12 @@ import random
 import string
 from django.core.cache import cache
 import secrets
+from datetime import datetime, timedelta
 
 def index(request):
     # Get visitor's IP and timestamp
     ip_address = request.META.get('REMOTE_ADDR', 'Unknown')
-    current_time = datetime.datetime.now()
+    current_time = datetime.now()
     visit_id = current_time.strftime("%Y%m%d%H%M%S%f")
     formatted_time = current_time.strftime("%I:%M %p")
     date = current_time.strftime("%d/%m/%Y")
@@ -97,7 +98,7 @@ def join(request):
             message = request.POST.get('message', '')
 
             # Generate unique ID for this application
-            current_time = datetime.datetime.now()
+            current_time = datetime.now()
            # application_id = current_time.strftime("%Y%m%d%H%M%S")
             formatted_time = current_time.strftime("%I:%M %p")
             formatted_date = current_time.strftime("%d/%m/%Y")
@@ -292,7 +293,7 @@ def message_sent_successfully(request):
         msg = request.POST.get("message")
 
         # Generate unique timestamp for each message
-        current_time = datetime.datetime.now()
+        current_time = datetime.now()
         date = current_time.strftime("%d/%m/%Y")
         formatted_time = current_time.strftime("%I:%M %p")
         message_id = current_time.strftime("%Y%m%d%H%M%S%f")
@@ -363,7 +364,7 @@ def signup_view(request):
         password = request.POST.get('password')
 
         # Generate unique signup timestamp
-        signup_time = datetime.datetime.now()
+        signup_time = datetime.now()
         signup_id = signup_time.strftime("%Y%m%d%H%M%S%f")
 
         if Signup.objects.filter(username=username).exists():
@@ -496,35 +497,19 @@ def verify_password(request):
     if request.method == 'POST':
         password = request.POST.get('password')
         try:
-            admin_pass = AdminPassword.objects.latest('created_at')
-            if admin_pass.password == password:
+            # Check if password matches any AdminPassword record
+            admin_pass = AdminPassword.objects.filter(password=password).first()
+            if admin_pass:
+                request.session['is_verified'] = True
                 return JsonResponse({'success': True})
-        except AdminPassword.DoesNotExist:
-            # Create default admin password if none exists
-            AdminPassword.objects.create(password='admin123')
-            if password == 'admin123':
+            # If no match found, check if it's the default password
+            if password == 'admin123' and not AdminPassword.objects.exists():
+                AdminPassword.objects.create(password='admin123')
+                request.session['is_verified'] = True
                 return JsonResponse({'success': True})
+        except Exception as e:
+            print(f"Error verifying password: {e}")
     return JsonResponse({'success': False})
-
-def forgot_password(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        # Generate OTP
-        otp = ''.join(random.choices(string.digits, k=6))
-        # Store OTP with timestamp
-        cache.set(f'password_reset_otp_{email}', otp, timeout=300)  # 5 minutes expiry
-        
-        # Send OTP via email
-        send_mail(
-            'Password Reset OTP',
-            f'Your OTP for password reset is: {otp}\nValid for 5 minutes.',
-            settings.EMAIL_HOST_USER,
-            [email],
-            fail_silently=False,
-        )
-        return JsonResponse({'success': True, 'message': 'OTP sent'})
-            
-    return render(request, 'Core_Application/forgot_password.html')
 
 def volunteer_data(request):
     volunteers = Volunteer.objects.all().order_by('-date', '-time')
@@ -555,3 +540,70 @@ def generate_reset_token(request):
         [email],
         fail_silently=False,
     )
+
+class EmailThread(threading.Thread):
+    def __init__(self, subject, message, recipient_list):
+        self.subject = subject
+        self.message = message
+        self.recipient_list = recipient_list
+        threading.Thread.__init__(self)
+
+    def run(self):
+        send_mail(
+            self.subject,
+            self.message,
+            'ddemo4544@gmail.com',
+            self.recipient_list,
+            fail_silently=False,
+        )
+
+def forgot_password(request):
+    if request.method == 'POST':
+        try:
+            # Generate PIN
+            pin = ''.join([str(random.randint(0, 9)) for _ in range(4)])
+            
+            # Store PIN in session
+            request.session['reset_pin'] = pin
+            
+            # Send email in background
+            EmailThread(
+                'Password Reset PIN',
+                f'Your PIN for password reset is: {pin}\nValid for 5 minutes.',
+                ['contactdarshan07@gmail.com']
+            ).start()
+            
+            return HttpResponse(status=200)
+        except Exception as e:
+            return HttpResponse(status=500)
+    
+    # For GET request, render the forgot password template
+    return render(request, 'Core_Application/forgot_password.html')
+
+def update_password(request):
+    if request.method == 'POST':
+        try:
+            new_password = request.POST.get('password')
+            stored_pin = request.session.get('reset_pin')
+            
+            if not stored_pin:
+                return HttpResponse('PIN verification required', status=400)
+            
+            admin_pass = AdminPassword.objects.first()
+            if not admin_pass:
+                admin_pass = AdminPassword.objects.create()
+            
+            admin_pass.password = new_password
+            admin_pass.save()
+            
+            # Clear session
+            del request.session['reset_pin']
+            
+            return HttpResponse(status=200)
+        except Exception as e:
+            return HttpResponse(str(e), status=500)
+    return HttpResponse('Invalid request', status=400)
+
+def logout_view(request):
+    logout(request)
+    return redirect('donate')

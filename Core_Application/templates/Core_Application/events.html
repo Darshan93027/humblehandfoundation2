@@ -52,66 +52,300 @@
     </nav>
     <!-- END Navbar -->
 
-    <!-- Hero Section -->
-    <div class="hero-wrap" style="background-image: url('{% static 'images/cause-4.jpg' %}');" data-stellar-background-ratio="0.5">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
-          <div class="col-md-7 ftco-animate text-center" data-scrollax="properties: { translateY: '70%' }">
-            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-              <span class="mr-2"><a href="{% url 'index' %}"></a></span> <span></span>
-            </p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">About Us</h1>
-          </div>
+    <!-- Updated Hero Section -->
+    <div class="hero-wrap" style="background-image: url('{% static 'images/bg_7.jpg' %}');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-8 ftco-animate text-center">
+                    <h1 class="mb-3">Our Events & Activities</h1>
+                    
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-
-    {% include 'Core_Application/photo.html' %}
-
-
-    {% load static %}
-    <section class="ftco-section">
+    <!-- Upcoming Events Section -->
+    <section class="ftco-section bg-light">
         <div class="container">
-            <div class="row d-flex">
-                <!-- Image Section -->
-                <div class="col-md-6 d-flex ftco-animate">
-                    <div 
-                        class="img img-about align-self-stretch" 
-                        style="background-image: url('{% static "images/bg_3.jpg" %}'); width: 100%;">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h2 class="mb-4">Upcoming Events</h2>
+                    <p>Join us in our upcoming initiatives to help those in need</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 ftco-animate">
+                    <div class="event-card">
+                        <div class="event-image" style="background-image: url('{% static 'images/food-distribution.jpg' %}');">
+                            <div class="date-badge">
+                                <span class="day">25</span>
+                                <span class="month">Mar</span>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <h3>Food Distribution Drive</h3>
+                            <div class="event-info">
+                                <p><i class="icon-clock-o"></i> 9:00 AM - 1:00 PM</p>
+                                <p><i class="icon-map-marker"></i> Vadodara Central</p>
+                            </div>
+                            <p class="description">Join us in distributing nutritious meals to 200+ underprivileged families in central Vadodara.</p>
+                            <a href="{% url 'join' %}" class="btn btn-primary">Volunteer Now</a>
+                        </div>
                     </div>
                 </div>
-                <!-- Text Content Section -->
-                <div class="col-md-6 pl-md-5 ftco-animate">
-                    <h2 class="mb-4">Welcome to Humble Hand Foundation</h2>
-                    <p>
-                        At Humble Hand Foundation, we believe in the transformative power of kindness and community. 
-                        Our mission is to offer a helping hand to those in need, empowering individuals and families to live with dignity and hope. 
-                        From providing essential meals and distributing clothing to offering support for the underprivileged, 
-                        we are committed to making a lasting positive impact in the lives of others.
-                    </p>
-                    <p>
-                        Founded with the conviction that small acts of kindness can create significant change, Humble Hand Foundation 
-                        serves as a bridge between those who want to give and those who need help the most. 
-                        Rooted in the values of humanity, humility, and hope, our efforts aim to meet basic needs and promote well-being 
-                        in communities across India, starting from our home base in Vadodara, Gujarat.
-                    </p>
-                    <p>
-                        With the support of generous donors, volunteers, and partners, we are expanding our reach to various cities across the country, 
-                        working towards a brighter, more inclusive future where everyone has the opportunity to thrive.
-                    </p>
-                    <p>
-                        Join us in making a difference—because every hand extended in kindness creates ripples of change 
-                        that can transform the world, one act at a time.
-                    </p>
+
+                <div class="col-md-4 ftco-animate">
+                    <div class="event-card">
+                        <div class="event-image" style="background-image: url('{% static 'images/education-support.jpg' %}');">
+                            <div class="date-badge">
+                                <span class="day">28</span>
+                                <span class="month">Mar</span>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <h3>Education Kit Distribution</h3>
+                            <div class="event-info">
+                                <p><i class="icon-clock-o"></i> 10:00 AM - 2:00 PM</p>
+                                <p><i class="icon-map-marker"></i> Local School, Vadodara</p>
+                            </div>
+                            <p class="description">Distribution of school supplies and educational materials to underprivileged children.</p>
+                            <a href="{% url 'join' %}" class="btn btn-primary">Volunteer Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 ftco-animate">
+                    <div class="event-card">
+                        <div class="event-image" style="background-image: url('{% static 'images/health-camp.jpg' %}');">
+                            <div class="date-badge">
+                                <span class="day">30</span>
+                                <span class="month">Mar</span>
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <h3>Health Check-up Camp</h3>
+                            <div class="event-info">
+                                <p><i class="icon-clock-o"></i> 8:00 AM - 4:00 PM</p>
+                                <p><i class="icon-map-marker"></i> Community Center</p>
+                            </div>
+                            <p class="description">Free health check-ups and medical consultations for underprivileged families.</p>
+                            <a href="{% url 'join' %}" class="btn btn-primary">Volunteer Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    
 
+    <!-- Past Events Gallery -->
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h2 class="mb-4">Past Events Gallery</h2>
+                    <p>Moments of Impact: Our Journey of Service</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="event-gallery">
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/food-distribution-event.jpg' %}" alt="Food Distribution">
+                            <div class="overlay">
+                                <div class="text">Food Distribution Drive</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/education-support-event.jpg' %}" alt="Education Support">
+                            <div class="overlay">
+                                <div class="text">Education Support Program</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/medical-camp-event.jpg' %}" alt="Medical Camp">
+                            <div class="overlay">
+                                <div class="text">Medical Health Camp</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/clothes-distribution.jpg' %}" alt="Clothes Distribution">
+                            <div class="overlay">
+                                <div class="text">Clothes Distribution</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/children-education.jpg' %}" alt="Children Education">
+                            <div class="overlay">
+                                <div class="text">Children's Education Program</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/elderly-care.jpg' %}" alt="Elderly Care">
+                            <div class="overlay">
+                                <div class="text">Elderly Care Program</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/community-meal.jpg' %}" alt="Community Meal">
+                            <div class="overlay">
+                                <div class="text">Community Meal Service</div>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-item ftco-animate">
+                            <img src="{% static 'images/skill-training.jpg' %}" alt="Skill Training">
+                            <div class="overlay">
+                                <div class="text">Skill Development Workshop</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Add this CSS -->
+    <style>
+    .event-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    .event-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .event-image {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    .date-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f86f2d;
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .date-badge .day {
+        font-size: 24px;
+        font-weight: bold;
+        display: block;
+        line-height: 1;
+    }
+
+    .date-badge .month {
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    .event-details {
+        padding: 20px;
+    }
+
+    .event-details h3 {
+        color: #333;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .event-info {
+        margin-bottom: 15px;
+        color: #666;
+    }
+
+    .event-info p {
+        margin-bottom: 5px;
+    }
+
+    .event-info i {
+        color: #f86f2d;
+        margin-right: 5px;
+    }
+
+    .description {
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .event-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    .gallery-item .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(248, 111, 45, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .overlay {
+        opacity: 1;
+    }
+
+    .gallery-item .text {
+        color: white;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .event-gallery {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+        
+        .event-card {
+            margin-bottom: 20px;
+        }
+        
+        .event-image {
+            height: 150px;
+        }
+    }
+    </style>
 
     <!-- Loader -->
     <div id="ftco-loader" class="show fullscreen">

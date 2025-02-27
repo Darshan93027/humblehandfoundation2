@@ -152,7 +152,7 @@
 	    				<div class="item">
 	    					<div class="cause-entry">
                                 {% load static %}
-		    					<a href="#" class="img" style="background-image: url(% static "images/foodforall.webp");"></a>
+		    					<a href="#" class="img" style="background-image: url('{% static "images/foodforall.webp" %}');"></a>
 		    					<div class="text p-3 p-md-4">
 		    						<h3><a> Right to Food</a></h3>
 		    						<p>Our foundation is dedicated to ensuring that no one goes hungry. We provide nutritious meals to those in need, focusing on vulnerable communities. Through our feeding programs, we aim to alleviate hunger and promote health and well-being for all individuals, regardless of their circumstances. Join us in making a difference by supporting our mission to feed those who are less fortunate.</p>
@@ -167,7 +167,7 @@
               <div class="item">
 	    					<div class="cause-entry">
                                 {% load static %}
-		    					<a href="#" class="img" style="background-image: url(%static "images/clothsforall.jpg");"></a>
+		    					<a href="#" class="img" style="background-image: url('{% static "images/clothsforall.jpg" %}');"></a>
 		    					<div class="text p-3 p-md-4">
 		    						<h3><a href="#"> Cloths for All</a></h3>
 		    						<p>Many individuals and families face hardships that leave them without adequate clothing. Our Cloths for All initiative seeks to provide essential clothing items to those in need. We believe that everyone deserves the dignity of proper clothing, and we strive to collect and distribute garments to vulnerable populations. Your support can help us bring warmth and comfort to those who need it most.</p>
@@ -260,7 +260,7 @@
         <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
             {% load static %}
-            <a href="blog-single.html" class="block-20" style="background-image: url(% static "images/diwali-gift.jpg" }');"></a>
+            <a href="blog-single.html" class="block-20" style="background-image: url('{% static "images/diwali-gift.jpg" %}');"></a>
             <div class="text p-4 d-block">
               <div class="meta mb-3">
                 <div><a href="#">Oct. 12, 2024</a></div>
@@ -268,7 +268,7 @@
               <h3 class="heading mb-3"><a href="#">Diwali Special: Sweet Gifts</a></h3>
               <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> 07:00PM-08:00PM</span> <span><i class="icon-map-o"></i> Vadodara</span></p>
               <p>This Diwali, our foundation brought smiles to children by distributing beautifully wrapped sweet gifts to spread joy and festive cheer.</p>
-              <p><a href="donate.html">Join Us <i class="ion-ios-arrow-forward"></i></a></p>
+            
             </div>
           </div>
         </div>
@@ -277,7 +277,7 @@
         <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
             {% load static %}
-            <a href="blog-single.html" class="block-20" style="background-image: url(% static "images/jalabi-fafda.jpg" }');"></a>
+            <a href="blog-single.html" class="block-20" style="background-image: url('{% static "images/jalabi-fafda.jpg" %}');"></a>
             <div class="text p-4 d-block">
               <div class="meta mb-3">
                 <div><a href="#">Nov. 3, 2024</a></div>
@@ -285,7 +285,7 @@
               <h3 class="heading mb-4"><a href="#">Dussehra Special: Jalebi Fafda Distribution</a></h3>
               <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> 07:00AM-08:00AM</span> <span><i class="icon-map-o"></i> Vadodara</span></p>
               <p>Our foundation proudly distributed 120 plates of delicious jalebi fafda to those in need in Vadodara.</p>
-              <p><a href="donate.html">Join Us <i class="ion-ios-arrow-forward"></i></a></p>
+          
             </div>
           </div>
         </div>
@@ -293,7 +293,7 @@
         <!-- Event 3 -->
         <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
-            <a href="blog-single.html" class="block-20" style="background-image: url(%  static "images/khichdi.jpg" }');"></a>
+            <a href="blog-single.html" class="block-20" style="background-image: url('{% static "images/khichdi.jpg" %}');"></a>
             <div class="text p-4 d-block">
               <div class="meta mb-3">
                 <div><a href="#">Oct. 6, 2024</a></div>
@@ -301,7 +301,7 @@
               <h3 class="heading mb-4"><a href="#">Nourishing Dinner: Khichi Distribution</a></h3>
               <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> 08:00PM-10:00PM</span> <span><i class="icon-map-o"></i> Vadodara</span></p>
               <p>Our foundation provided 100 plates of warm khichi for dinner to those in need in Vadodara.</p>
-              <p><a href="donate.html">Join Us <i class="ion-ios-arrow-forward"></i></a></p>
+           
             </div>
           </div>
         </div>
@@ -309,7 +309,7 @@
         <!-- Event 4 -->
         <div class="col-12 col-sm-6 col-md-3 d-flex ftco-animate mb-4">
           <div class="blog-entry align-self-stretch">
-            <a href="blog-single.html" class="block-20" style="background-image: url(% static "images/poha.jpg" }}');"></a>
+            <a href="blog-single.html" class="block-20" style="background-image: url('{% static "images/poha.jpg" %}');"></a>
             <div class="text p-4 d-block">
               <div class="meta mb-3">
                 <div><a href="#">Sept. 29, 2024</a></div>
@@ -317,7 +317,7 @@
               <h3 class="heading mb-4"><a href="#">Breakfast for All: Poha and Chai Distribution</a></h3>
               <p class="time-loc"><span class="mr-2"><i class="icon-clock-o"></i> 07:00AM-08:00AM</span> <span><i class="icon-map-o"></i> Vadodara</span></p>
               <p>Our foundation served 100 plates of nutritious poha accompanied by warm chai for breakfast to those in need in Vadodara.</p>
-              <p><a href="donate.html">Join Us <i class="ion-ios-arrow-forward"></i></a></p>
+             
             </div>
           </div>
         </div>

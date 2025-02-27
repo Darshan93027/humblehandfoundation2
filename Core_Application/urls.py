@@ -26,6 +26,8 @@ urlpatterns = [
     path('data/messages/', views.message_data, name='message_data'),
     path('data/users/', views.user_data, name='user_data'),
     path('data/donations/', views.donation_data, name='donation_data'),
+    path('update-password/', views.update_password, name='update_password'),
+    path('logout/', views.logout_view, name='logout'),
 ]
 
 if settings.DEBUG:

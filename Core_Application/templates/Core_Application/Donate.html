@@ -1006,14 +1006,14 @@
 
                             <div class="join-community">
                                 {% if user.is_authenticated %}
-                                    <a href="#impact" class="impact-btn">
-                                        Join Our Community
+                                    <a href="{% url 'signup' %}" class="impact-btn">
+                                        Donate Now
                                         <span class="btn-icon">→</span>
                                     </a>
                                 {% else %}
                                     <div class="auth-links">
                                         <a href="{% url 'signup' %}" class="impact-btn">
-                                            Become a Changemaker
+                                            Donate Now
                                             <span class="btn-icon">↗</span>
                                         </a>
                                         <p class="mt-3">

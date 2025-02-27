@@ -28,14 +28,63 @@
         <div class="modal-content">
             <div class="close-btn" onclick="closeModal()">×</div>
             <h2>Admin Access</h2>
-            <form action="{% url 'verify_password' %}" method="POST" class="password-form">
+            <form id="passwordForm" class="password-form">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Enter Admin Password" required>
+                    <input type="password" name="password" id="adminPassword" placeholder="Enter Admin Password" required>
                 </div>
                 <button type="submit" class="submit-btn">Access Dashboard</button>
-                <a href="{% url 'forgot_password' %}" class="forgot-password">Forgot Password?</a>
+                <div id="errorMessage" class="error-message"></div>
+                <button type="button" onclick="handleForgotPassword()" class="forgot-btn">Forgot Password?</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Add PIN verification modal -->
+    <div class="pin-modal" id="pinModal" style="display: none;">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closePinModal()">×</div>
+            <h2>Enter PIN</h2>
+            <p class="pin-info">Enter the 4-digit PIN sent to admin email</p>
+            <form id="pinForm" class="pin-form">
+                {% csrf_token %}
+                <div class="pin-container">
+                    <input type="text" maxlength="1" class="pin-input" required>
+                    <input type="text" maxlength="1" class="pin-input" required>
+                    <input type="text" maxlength="1" class="pin-input" required>
+                    <input type="text" maxlength="1" class="pin-input" required>
+                </div>
+                <button type="submit" class="submit-btn">Verify PIN</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add new password modal -->
+    <div class="password-reset-modal" id="newPasswordModal" style="display: none;">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeNewPasswordModal()">×</div>
+            <h2>Set New Password</h2>
+            <form id="newPasswordForm" class="password-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="password" id="newPassword" placeholder="New Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add toast notification -->
+    <div id="toast" class="toast-notification"></div>
+
+    <!-- Add this centered message box div after the toast div -->
+    <div id="centerMessageBox" class="center-message-box">
+        <div class="message-content">
+            <div class="spinner"></div>
+            <p id="messageText"></p>
         </div>
     </div>
 
@@ -97,14 +146,16 @@
                                 <span class="icon">📍</span>
                                 <div>
                                     <h4>Address</h4>
-                                    <p>123 Main Street, Mumbai, Maharashtra, India</p>
+                                    <p>Near Vadodara Railway Station,
+                                        Sayajiganj, Vadodara,
+                                        Gujarat 390005, India</p>
                                 </div>
                             </div>
                             <div class="info-item">
                                 <span class="icon">📞</span>
                                 <div>
                                     <h4>Phone</h4>
-                                    <p>+91 98765 43210</p>
+                                    <p>+91 xxxxx xxxxx</p>
                                 </div>
                             </div>
                             <div class="info-item">
@@ -209,56 +260,210 @@
     function showModal(event) {
         event.preventDefault();
         const modal = document.getElementById('passwordModal');
-        const modalContent = modal.querySelector('.modal-content');
         modal.style.display = 'flex';
         setTimeout(() => {
-            modalContent.classList.add('active');
+            modal.querySelector('.modal-content').classList.add('active');
         }, 10);
     }
 
     function closeModal() {
         const modal = document.getElementById('passwordModal');
-        const modalContent = modal.querySelector('.modal-content');
-        modalContent.classList.remove('active');
+        modal.querySelector('.modal-content').classList.remove('active');
         setTimeout(() => {
             modal.style.display = 'none';
         }, 300);
+        // Clear password and error message
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('errorMessage').style.display = 'none';
     }
 
-    // Close modal when clicking outside
-    document.getElementById('passwordModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeModal();
-        }
-    });
-
-    // Handle form submission
-    document.querySelector('.password-form').addEventListener('submit', async function(e) {
+    document.getElementById('passwordForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const formData = new FormData(this);
-        
+        const password = document.getElementById('adminPassword').value;
+        const errorMessage = document.getElementById('errorMessage');
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
         try {
             const response = await fetch('{% url "verify_password" %}', {
                 method: 'POST',
-                body: formData,
                 headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
+                },
+                body: `password=${password}`
             });
-            
+
             const data = await response.json();
             
             if (data.success) {
                 window.location.href = '{% url "data" %}';
             } else {
-                const modalContent = document.querySelector('.modal-content');
-                modalContent.classList.add('shake');
-                setTimeout(() => modalContent.classList.remove('shake'), 400);
+                errorMessage.textContent = 'Invalid password';
+                errorMessage.style.display = 'block';
+                // Clear password field on error
+                document.getElementById('adminPassword').value = '';
             }
         } catch (error) {
             console.error('Error:', error);
+            errorMessage.textContent = 'An error occurred. Please try again.';
+            errorMessage.style.display = 'block';
         }
     });
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('passwordModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    function showToast(message, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast-notification ${isError ? 'error' : ''}`;
+        toast.style.display = 'block';
+        
+        // Center the toast
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+        const toastHeight = toast.offsetHeight;
+        const toastWidth = toast.offsetWidth;
+        
+        toast.style.top = `${(viewportHeight - toastHeight) / 2}px`;
+        toast.style.left = `${(viewportWidth - toastWidth) / 2}px`;
+        toast.style.transform = 'translate(-50%, -50%)';
+        
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3000);
+    }
+
+    async function handleForgotPassword() {
+        const messageBox = document.getElementById('centerMessageBox');
+        const messageText = document.getElementById('messageText');
+        
+        try {
+            // Show message box with spinner
+            messageText.textContent = 'Sending PIN to admin email...';
+            messageBox.style.display = 'flex';
+            closeModal(); // Close password modal
+
+            // Send request to send PIN
+            await fetch('{% url "forgot_password" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            });
+
+            // Show success message and redirect
+            messageText.textContent = 'PIN sent successfully! Redirecting...';
+            setTimeout(() => {
+                window.location.href = '{% url "forgot_password" %}';
+            }, 1500);
+
+        } catch (error) {
+            messageText.textContent = 'Error sending PIN. Please try again.';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 2000);
+        }
+    }
+
+    // Handle PIN input
+    const pinInputs = document.querySelectorAll('.pin-input');
+    pinInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.value && index < pinInputs.length - 1) {
+                pinInputs[index + 1].focus();
+            }
+        });
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                pinInputs[index - 1].focus();
+            }
+        });
+    });
+
+    // Handle PIN verification
+    document.getElementById('pinForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pin = Array.from(pinInputs).map(input => input.value).join('');
+        
+        try {
+            const response = await fetch('{% url "forgot_password" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: `action=verify_pin&pin=${pin}`
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                document.getElementById('pinModal').style.display = 'none';
+                document.getElementById('newPasswordModal').style.display = 'flex';
+            } else {
+                showToast('Invalid PIN', true);
+            }
+        } catch (error) {
+            showToast('Error verifying PIN', true);
+        }
+    });
+
+    // Handle password update
+    document.getElementById('newPasswordForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword !== confirmPassword) {
+            showToast('Passwords do not match', true);
+            return;
+        }
+
+        try {
+            const response = await fetch('{% url "forgot_password" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: `action=update_password&password=${newPassword}`
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                showToast('Password updated successfully');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                showToast(data.message || 'Error updating password', true);
+            }
+        } catch (error) {
+            showToast('Error updating password', true);
+        }
+    });
+
+    function closePinModal() {
+        const modal = document.getElementById('pinModal');
+        modal.style.display = 'none';
+        // Clear PIN inputs
+        document.querySelectorAll('.pin-input').forEach(input => input.value = '');
+    }
+
+    function closeNewPasswordModal() {
+        const modal = document.getElementById('newPasswordModal');
+        modal.style.display = 'none';
+        // Clear password inputs
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+    }
     </script>
   </body>
 </html>
@@ -439,12 +644,11 @@
         background: white;
         padding: 30px;
         border-radius: 15px;
+        position: relative;
         width: 90%;
         max-width: 400px;
-        position: relative;
-        transform: scale(0.7);
-        opacity: 0;
-        transition: all 0.3s ease;
+        margin: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
     .modal-content.active {
@@ -454,12 +658,13 @@
 
     .close-btn {
         position: absolute;
-        top: 10px;
-        right: 15px;
+        top: 15px;
+        right: 20px;
         font-size: 24px;
         cursor: pointer;
         color: #666;
         transition: all 0.3s ease;
+        padding: 5px;
     }
 
     .close-btn:hover {
@@ -468,32 +673,36 @@
     }
 
     .password-form {
-        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 
-    .password-form input {
+    .form-group {
+        position: relative;
+    }
+
+    .form-group input {
         width: 100%;
-        padding: 12px 15px;
+        padding: 12px;
         border: 2px solid #eee;
         border-radius: 8px;
         font-size: 16px;
         transition: all 0.3s ease;
-        margin-bottom: 20px;
     }
 
-    .password-form input:focus {
+    .form-group input:focus {
         border-color: #f86f2d;
-        box-shadow: 0 0 0 3px rgba(248, 111, 45, 0.1);
         outline: none;
+        box-shadow: 0 0 0 3px rgba(248,111,45,0.1);
     }
 
     .submit-btn {
-        width: 100%;
-        padding: 12px;
         background: linear-gradient(45deg, #f86f2d, #ff8f50);
-        border: none;
-        border-radius: 8px;
         color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
@@ -502,32 +711,142 @@
 
     .submit-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(248, 111, 45, 0.2);
+        box-shadow: 0 5px 15px rgba(248,111,45,0.2);
     }
 
-    .forgot-password {
-        display: block;
-        text-align: center;
-        margin-top: 15px;
-        color: #f86f2d;
-        text-decoration: none;
+    .error-message {
+        color: #dc3545;
+        margin-top: 10px;
+        display: none;
         font-size: 14px;
+        text-align: center;
+    }
+
+    .toast-notification {
+        position: fixed;
+        padding: 20px 30px;
+        background: #4CAF50;
+        color: white;
+        border-radius: 8px;
+        display: none;
+        z-index: 2000;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        min-width: 300px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .toast-notification.error {
+        background: #f44336;
+    }
+
+    .forgot-btn {
+        background: transparent;
+        border: none;
+        color: #f86f2d;
+        font-size: 14px;
+        margin-top: 10px;
+        cursor: pointer;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+    }
+
+    .forgot-btn:hover {
+        color: #ff8f50;
+    }
+
+    .pin-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .pin-input {
+        width: 45px;
+        height: 45px;
+        font-size: 24px;
+        text-align: center;
+        border: 2px solid #eee;
+        border-radius: 8px;
         transition: all 0.3s ease;
     }
 
-    .forgot-password:hover {
-        color: #ff8f50;
-        text-decoration: underline;
+    .pin-input:focus {
+        border-color: #f86f2d;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(248,111,45,0.1);
     }
 
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        75% { transform: translateX(5px); }
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translate(-50%, -40%); }
+        10% { opacity: 1; transform: translate(-50%, -50%); }
+        90% { opacity: 1; transform: translate(-50%, -50%); }
+        100% { opacity: 0; transform: translate(-50%, -60%); }
     }
 
-    .shake {
-        animation: shake 0.4s ease-in-out;
+    .toast-notification {
+        animation: fadeInOut 3s ease forwards;
+    }
+
+    .center-message-box {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        max-width: 400px;
+        width: 90%;
+        animation: scaleIn 0.3s ease;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #f86f2d;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        animation: spin 1s linear infinite;
+    }
+
+    #messageText {
+        color: #333;
+        font-size: 18px;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes scaleIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
     }
 </style>
 

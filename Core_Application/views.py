@@ -41,15 +41,15 @@ import secrets
 from datetime import datetime, timedelta
 
 def index(request):
-    # Get visitor's IP and timestamp
-    ip_address = request.META.get('REMOTE_ADDR', 'Unknown')
-    current_time = datetime.now()
-    visit_id = current_time.strftime("%Y%m%d%H%M%S%f")
-    formatted_time = current_time.strftime("%I:%M %p")
-    date = current_time.strftime("%d/%m/%Y")
-    
     try:
-        # Thread for sending admin notification
+        # Get visitor's IP and timestamp
+        ip_address = request.META.get('REMOTE_ADDR', 'Unknown')
+        current_time = datetime.now()
+        visit_id = current_time.strftime("%Y%m%d%H%M%S%f")
+        formatted_time = current_time.strftime("%I:%M %p")
+        date = current_time.strftime("%d/%m/%Y")
+
+        # Create a new thread for sending email
         def send_admin_notification():
             try:
                 send_mail(
@@ -68,20 +68,22 @@ Best Regards,
 HumbleHandFoundation System""",
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=['contactdarshan07@gmail.com'],
-                    fail_silently=False,  # Changed to False to see errors
+                    fail_silently=True
                 )
-                print("Email sent successfully!")  # Debug message
             except Exception as email_error:
-                print(f"Email error: {str(email_error)}")  # Debug message
-        
-        # Start the email thread
+                print(f"Email sending failed: {str(email_error)}")
+
+        # Start email thread
         email_thread = Thread(target=send_admin_notification)
+        email_thread.daemon = True  # Make thread daemon so it doesn't block shutdown
         email_thread.start()
-        
+
+        # Render the template
+        return render(request, "Core_Application/index.html")
     except Exception as e:
-        print(f"General error: {str(e)}")  # Debug message
-    
-    return render(request, "Core_Application/index.html")
+        print(f"Error in index view: {str(e)}")
+        # Return a simple response if template rendering fails
+        return render(request, "Core_Application/index.html")
 
 def contribators(request):
     return render(request, "Core_Application/contributors.html")

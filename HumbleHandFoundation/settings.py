@@ -157,7 +157,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ddemo4544@gmail.com'
-EMAIL_HOST_PASSWORD = 'ajun datg flwf wbwx'  # Make sure there are no spaces in this password
+EMAIL_HOST_PASSWORD = 'jun datg flwf wbwx'  # Make sure there are no spaces in this password
 
 # For debugging email issues
 EMAIL_DEBUG = True
